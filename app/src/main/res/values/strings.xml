@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Fragment</string>
+    <string name="contacts">Контакты</string>
+    <string name="calls">Звонки</string>
+    <string name="announcements">Оповещения</string>
+    <string name="done">Готово</string>
+    <string name="ok">В процессе</string>
 </resources>
