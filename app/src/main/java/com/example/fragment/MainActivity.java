@@ -35,5 +35,19 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnTa
     @Override
     public void onTaskClicked(Task task) {
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if (isLandscape) {
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.details_fragment, DetailsFragment.newInstance(task))
+                    .commit();
+        } else {
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, DetailsFragment.newInstance(task))
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 }
