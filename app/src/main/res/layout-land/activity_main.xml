@@ -25,6 +25,6 @@
         app:layout_constraintStart_toEndOf="@+id/list_fragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:background="@color/purple_200"/>
+        tools:background="@color/purple_500"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
