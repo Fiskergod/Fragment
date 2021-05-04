@@ -8,11 +8,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fragment.domain.Task;
 import com.example.fragment.domain.TasksRepository;
@@ -69,6 +72,28 @@ public class ListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     openTaskDetail(task);
+                }
+            });
+
+            view.findViewById(R.id.popUp_menu).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu menu = new PopupMenu(requireContext(), v);
+
+                    requireActivity().getMenuInflater().inflate(R.menu.activity_menu, menu.getMenu());
+
+                    menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if (item.getItemId() == R.id.popUp_menu) {
+                                Toast.makeText(requireContext(), "PopUpMenu", Toast.LENGTH_LONG).show();
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+
+                    menu.show();
                 }
             });
 

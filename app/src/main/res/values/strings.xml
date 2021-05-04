@@ -10,4 +10,6 @@
     <string name="info">info</string>
     <string name="sidebar">sidebar</string>
     <string name="menu_clear">clear</string>
+    <string name="date">01 ЯНВ 2021</string>
+    <string name="menu">popUpMenu</string>
 </resources>
