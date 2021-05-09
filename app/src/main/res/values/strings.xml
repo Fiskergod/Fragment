@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Fragment</string>
+    <string name="contacts">Контакты</string>
+    <string name="calls">Звонки</string>
+    <string name="announcements">Оповещения</string>
+    <string name="done">Готово</string>
+    <string name="ok">В процессе</string>
+    <string name="search">search</string>
+    <string name="sort_by">sort by</string>
+    <string name="info">info</string>
+    <string name="sidebar">sidebar</string>
+    <string name="menu_clear">clear</string>
+    <string name="date">01 ЯНВ 2021</string>
+    <string name="menu">popUpMenu</string>
 </resources>
