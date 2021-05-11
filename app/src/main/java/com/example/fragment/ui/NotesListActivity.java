@@ -1,4 +1,4 @@
-package com.example.fragment;
+package com.example.fragment.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -7,21 +7,30 @@ import androidx.fragment.app.FragmentManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fragment.DetailsFragment;
+import com.example.fragment.ListFragment;
+import com.example.fragment.R;
+import com.example.fragment.domain.Note;
 import com.example.fragment.domain.Task;
 
 import java.util.Calendar;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ListFragment.OnTaskClicked {
+public class NotesListActivity extends AppCompatActivity implements ListFragment.OnTaskClicked {
+
+    private NotesListViewModel viewModel;
 
     private boolean isLandscape = false;
+
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
 
@@ -29,37 +38,44 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnTa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initDatePicker();
-        dateButton = findViewById(R.id.datePickerButton);
 
-        // Выделенный код работает, но в эмуляторе скрывает значки главного меню. Не могу понять почему,
-        // укажите на ошибку пожалуйста
-        // Выдает вот такое дело:
-        // E/: [ZeroHung]zrhung_get_config: Get config failed for wp[0x0102]
-        // E/MemoryLeakMonitorManager: MemoryLeakMonitor.jar is not exist!
-        // E/AwareLog: AtomicFileUtils: readFileLines file not exist: android.util.AtomicFile@772d1b
+        NotesAdapter adapter = new NotesAdapter();
 
-        /*Toolbar toolbar = findViewById(R.id.toolbar);
-
-        setSupportActionBar(toolbar);
-
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        adapter.setClickListener(new NotesAdapter.onNoteClicked() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.action_sort) {
-                    Toast.makeText(MainActivity.this, "Action Sort", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-
-                if (item.getItemId() == R.id.action_info) {
-                    Toast.makeText(MainActivity.this, "Action Info", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                return false;
+            public void onNoteClicked(Note note) {
+                Toast.makeText(NotesListActivity.this, note.getTitle(), Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
 
-        isLandscape = getResources().getBoolean(R.bool.isLand);
+        viewModel = new ViewModelProvider(this).get(NotesListViewModel.class);
+
+        if (savedInstanceState == null) {
+            viewModel.requestNotes();
+        }
+
+        viewModel.getNotesLiveData().observe(this, new Observer<List<Note>>() {
+            @Override
+            public void onChanged(List<Note> notes) {
+                adapter.addNList(notes);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        /*initDatePicker();
+        dateButton = findViewById(R.id.datePickerButton);*/
+
+        RecyclerView noteList = findViewById(R.id.note_list);
+
+        noteList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        noteList.setAdapter(adapter);
+
+        //adapter.addNList();
+
+
+
+        /*isLandscape = getResources().getBoolean(R.bool.isLand);
 
         if (!isLandscape) {
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -71,18 +87,15 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnTa
                         .replace(R.id.container, new ListFragment())
                         .commit();
             }
-        }
+        }*/
     }
 
     private void initDatePicker() {
 
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                month += 1;
-                String date = makeDateString(day, month, year);
-                dateButton.setText(date);
-            }
+        DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, day) -> {
+            month += 1;
+            String date = makeDateString(day, month, year);
+            dateButton.setText(date);
         };
 
         Calendar calendar = Calendar.getInstance();
@@ -93,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnTa
         int style = AlertDialog.THEME_HOLO_DARK;
 
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
-
     }
 
     private String makeDateString(int day, int month, int year) {

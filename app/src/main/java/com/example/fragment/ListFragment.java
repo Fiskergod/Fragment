@@ -11,10 +11,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fragment.domain.Task;
@@ -62,11 +60,11 @@ public class ListFragment extends Fragment {
 
         List<Task> tasks = new TasksRepository().getTasks();
 
-        LinearLayout tasksList = view.findViewById(R.id.tasks_list);
+        LinearLayout tasksList = view.findViewById(R.id.task);
 
         for (Task task : tasks) {
 
-            View taskView = LayoutInflater.from(requireContext()).inflate(R.layout.item_deal, tasksList, false);
+            View taskView = LayoutInflater.from(requireContext()).inflate(R.layout.item_note, tasksList, false);
 
             taskView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -97,13 +95,13 @@ public class ListFragment extends Fragment {
                 }
             });
 
-            ImageView image = taskView.findViewById(R.id.icon);
+            /*ImageView image = taskView.findViewById(R.id.icon);
             image.setImageResource(task.getDrawRes());
 
             TextView title = taskView.findViewById(R.id.task_name);
             title.setText(task.getTitleRes());
 
-            tasksList.addView(taskView);
+            tasksList.addView(taskView);*/
         }
     }
 

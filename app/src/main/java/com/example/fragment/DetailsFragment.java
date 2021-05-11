@@ -40,7 +40,7 @@ public class DetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ImageView imageView = view.findViewById(R.id.icon);
-        EditText title = view.findViewById(R.id.task_description);
+        EditText title = view.findViewById(R.id.task_info);
 
         Task task = getArguments().getParcelable(ARG_TASK);
 
