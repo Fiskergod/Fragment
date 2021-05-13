@@ -14,7 +14,7 @@
         android:textSize="@dimen/text_size"/>
 
     <ImageView
-        android:id="@+id/icon"
+        android:id="@+id/icons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

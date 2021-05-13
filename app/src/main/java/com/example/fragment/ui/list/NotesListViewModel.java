@@ -1,4 +1,4 @@
-package com.example.fragment.ui;
+package com.example.fragment.ui.list;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -14,6 +14,10 @@ public class NotesListViewModel extends ViewModel {
 
     private final MutableLiveData<List<Note>> notesLiveData = new MutableLiveData<>();
 
+    private final MutableLiveData<Note> noteAddedLiveData = new MutableLiveData<>();
+
+    private final MutableLiveData<Integer> noteDeletedLiveData = new MutableLiveData<>();
+
     private final NotesRepository repository = new MockNotesRepository();
 
     public LiveData<List<Note>> getNotesLiveData() {
@@ -24,5 +28,26 @@ public class NotesListViewModel extends ViewModel {
         List<Note> notes = repository.getNotes();
 
         notesLiveData.setValue(notes);
+    }
+
+    public void addClicked() {
+        Note note = repository.addNote();
+
+        noteAddedLiveData.setValue(note);
+    }
+
+    public LiveData<Note> getNoteAddedLiveData() {
+        return noteAddedLiveData;
+    }
+
+    public void deleteClicked(int longClickedPosition) {
+        repository.removeAtPosition(longClickedPosition);
+
+        noteDeletedLiveData.setValue(longClickedPosition);
+
+    }
+
+    public LiveData<Integer> getNoteDeletedLiveData() {
+        return noteDeletedLiveData;
     }
 }

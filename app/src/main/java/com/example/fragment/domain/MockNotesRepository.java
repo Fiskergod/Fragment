@@ -21,4 +21,14 @@ public class MockNotesRepository implements NotesRepository {
 
         return notes;
     }
+
+    @Override
+    public Note addNote() {
+        return new Note("id1", "Note One", "https://cdn.pixabay.com/photo/2020/08/18/06/06/extreme-5497194_960_720.jpg");
+    }
+
+    @Override
+    public void removeAtPosition(int longClickedPosition) {
+
+    }
 }

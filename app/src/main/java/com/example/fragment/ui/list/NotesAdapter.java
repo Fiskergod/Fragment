@@ -1,4 +1,4 @@
-package com.example.fragment.ui;
+package com.example.fragment.ui.list;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
@@ -23,9 +24,35 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.noteViewHold
 
     private onNoteClicked clickListener;
 
+    private final Fragment fragment;
+
+    private int longClickedPosition = -1;
+
+    public NotesAdapter(Fragment fragment) {
+        this.fragment = fragment;
+    }
+
     public void addNList(List<Note> toAdd) {
         nList.clear();
         nList.addAll(toAdd);
+
+        notifyDataSetChanged();
+    }
+
+    public int addNList(Note note) {
+        nList.add(note);
+
+        int position = nList.size() - 1;
+
+        notifyItemInserted(position);
+
+        return position;
+    }
+
+    public void delete(int index) {
+        nList.remove(index);
+
+        notifyItemRemoved(index);
     }
 
     @NonNull
@@ -60,6 +87,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.noteViewHold
         this.clickListener = clickListener;
     }
 
+    public int getLongClickedPosition() {
+        return longClickedPosition;
+    }
+
+    public Note getItemAt(int longClickedPosition) {
+        return nList.get(longClickedPosition);
+    }
+
     class noteViewHolder extends ViewHolder {
 
         TextView style;
@@ -68,12 +103,23 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.noteViewHold
         public noteViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            fragment.registerForContextMenu(itemView);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (getClickListener() != null) {
                         getClickListener().onNoteClicked(nList.get(getAdapterPosition()));
                     }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    itemView.showContextMenu();
+                    longClickedPosition = getAdapterPosition();
+                    return true;
                 }
             });
 
