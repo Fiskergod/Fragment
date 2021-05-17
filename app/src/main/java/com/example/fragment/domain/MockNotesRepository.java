@@ -5,6 +5,20 @@ import java.util.List;
 
 public class MockNotesRepository implements NotesRepository {
     @Override
+    public void getNotes(Callback<List<Note>> callback) {
+
+    }
+
+    @Override
+    public void addNote(String title, String imageUrl, Callback<Note> callback) {
+
+    }
+
+    @Override
+    public void remove(Note item, Callback<Object> callback) {
+
+    }
+    /*@Override
     public List<Note> getNotes() {
         ArrayList<Note> notes = new ArrayList<>();
 
@@ -30,5 +44,5 @@ public class MockNotesRepository implements NotesRepository {
     @Override
     public void removeAtPosition(int longClickedPosition) {
 
-    }
+    }*/
 }

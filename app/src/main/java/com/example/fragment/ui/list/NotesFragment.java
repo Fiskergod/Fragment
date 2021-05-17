@@ -77,20 +77,20 @@ public class NotesFragment extends Fragment {
 
         RecyclerView noteList = view.findViewById(R.id.note_list);
 
-        viewModel.getNoteAddedLiveData().observe(getViewLifecycleOwner(), new Observer<Note>() {
+        /*viewModel.getNoteAddedLiveData().observe(getViewLifecycleOwner(), new Observer<Note>() {
             @Override
             public void onChanged(Note note) {
                 int position = adapter.addNList(note);
                 noteList.smoothScrollToPosition(position);
             }
-        });
+        });*/
 
-        viewModel.getNoteDeletedLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+        /*viewModel.getNoteDeletedLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer position) {
                adapter.delete(position);
             }
-        });
+        });*/
 
         noteList.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -125,7 +125,7 @@ public class NotesFragment extends Fragment {
             return true;
 
         } else if (item.getItemId() == R.id.action_delete) {
-            viewModel.deleteClicked(adapter.getLongClickedPosition());
+            viewModel.deleteClicked(adapter.getItemAt(adapter.getLongClickedPosition()));
             Toast.makeText(requireContext(), "Delete", Toast.LENGTH_SHORT).show();
 
             return true;
