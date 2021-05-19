@@ -54,7 +54,6 @@ public class FirestoreNotesRepository implements NotesRepository {
                         } else {
 
                             callback.onError(task.getException());
-
                         }
                     }
                 });
@@ -103,9 +102,7 @@ public class FirestoreNotesRepository implements NotesRepository {
                         } else {
                             callback.onError(task.getException());
                         }
-
                     }
                 });
-
     }
 }

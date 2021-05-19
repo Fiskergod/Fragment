@@ -19,4 +19,8 @@
     <string name="delete">delete</string>
     <string name="edit_menu">Edit Notes</string>
     <string name="hint_note_title">Notes name</string>
+    <string name="alert_dialog">Dialog</string>
+    <string name="alert_dialog_message">Are you sure</string>
+    <string name="positive">Yes</string>
+    <string name="negative">No</string>
 </resources>
