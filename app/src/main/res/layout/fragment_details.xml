@@ -6,15 +6,15 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/task_description"
+        android:id="@+id/task_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Description"
+        tools:text="Information"
         android:layout_margin="@dimen/margin"
         android:textSize="@dimen/text_size"/>
 
     <ImageView
-        android:id="@+id/icon"
+        android:id="@+id/icons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -18,6 +18,12 @@
         android:id="@+id/action_info"
         android:icon="@drawable/ic_baseline_info_24"
         android:title="@string/info"
+        app:showAsAction="never" />
+
+        <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_baseline_post_add_24"
+        android:title="@string/add"
         app:showAsAction="ifRoom" />
 
 </menu>
